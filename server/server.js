@@ -17,8 +17,9 @@ app.post('/todos', (req, res) => {
     });
 
     todo.save().then((doc) => {
-        console.log(`response: ${res}`);
-        console.log(`doc: ${doc}`);
+        console.log(`POST response: ${res}`);
+        console.log(`POST Save doc: ${doc}`);
+        console.log('\n');
         res.send(doc);
     }, (err) => {
         console.log(`Error: ${err}`);
