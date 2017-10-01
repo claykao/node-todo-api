@@ -11,13 +11,14 @@ app.use(bodyParser.json());
 
 app.post('/todos', (req, res) => {
     console.log('Todo:', req.body);
-    
+
     var todo = new Todo({
         text: req.body.text
     });
 
     todo.save().then((doc) => {
         console.log(`response: ${res}`);
+        console.log(`doc: ${doc}`);
         res.send(doc);
     }, (err) => {
         console.log(`Error: ${err}`);
@@ -28,3 +29,5 @@ app.post('/todos', (req, res) => {
 app.listen(3000, () => {
     console.log('Server is listening on port 3000');
 });
+
+module.exports = {app};
