@@ -26,7 +26,7 @@ app.post('/todos', (req, res) => {
         console.log(`POST response: ${res}`);
         console.log(`POST Save doc: ${doc}`);
         console.log('\n');
-        res.send(doc);
+        res.send({doc});
     }, (err) => {
         console.log(`Error: ${err}`);
         res.status(400).send(err);
