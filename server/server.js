@@ -1,3 +1,6 @@
+require('./config/config');
+
+
 const _ = require('lodash');
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -9,7 +12,9 @@ var {User} = require('./models/user');
 
 var app = new express();
 
-const port = process.env.PORT || 3000;
+//default PORT is set in config.js
+//const port = process.env.PORT || 3000;
+const port = process.env.PORT;
 
 app.use(bodyParser.json());
 
@@ -26,7 +31,7 @@ app.post('/todos', (req, res) => {
         console.log(`POST response: ${res}`);
         console.log(`POST Save doc: ${doc}`);
         console.log('\n');
-        res.send({doc});
+        res.send(doc);
     }, (err) => {
         console.log(`Error: ${err}`);
         res.status(400).send(err);
