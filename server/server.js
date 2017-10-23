@@ -22,19 +22,19 @@ app.use(bodyParser.json());
 // -----------------------------------------------
 // create a new todo doc
 app.post('/todos', (req, res) => {
-    console.log('Todo:', req.body);
+    console.log('\tTodo:', req.body);
 
     var todo = new Todo({
         text: req.body.text
     });
 
     todo.save().then((doc) => {
-        console.log(`POST response: ${res}`);
-        console.log(`POST Save doc: ${doc}`);
+        console.log(`\tPOST todo response: ${res}`);
+        console.log(`\tPOST todo Save doc: ${doc}`);
         console.log('\n');
         res.send(doc);
     }, (err) => {
-        console.log(`Error: ${err}`);
+        console.log(`\tError: ${err}`);
         res.status(400).send(err);
     });
 });
@@ -55,7 +55,7 @@ app.get('/todos/:id', (req, res) => {
     var id = req.params.id;
 
     if (!ObjectID.isValid(id)) {
-        console.log('invalid ID');
+        console.log('\tget - invalid ID');
         return res.status(404).send();
     }
 
@@ -75,7 +75,7 @@ app.delete('/todos/:id', (req, res) => {
     var id = req.params.id;
 
     if (!ObjectID.isValid(id)) {
-        console.log('invalid ID');
+        console.log('\tdelete - invalid ID');
         return res.status(404).send();
     }
 
@@ -94,10 +94,10 @@ app.delete('/todos/:id', (req, res) => {
 app.patch('/todos/:id', (req, res) => {
     var id = req.params.id;
     var body = _.pick(req.body, ['text', 'completed']);
-    console.log('patch body', body);
+    console.log('\tpatch body', body);
 
     if (!ObjectID.isValid(id)) {
-        console.log('invalid ID');
+        console.log('\tpatch - invalid ID');
         return res.status(404).send();
     }
 
@@ -115,7 +115,7 @@ app.patch('/todos/:id', (req, res) => {
 
         res.send({todo});
     }).catch((err) => {
-        console.log('error caught', err);
+        console.log('\terror caught', err);
         res.status(400).send(err);
     });
 });
@@ -123,7 +123,9 @@ app.patch('/todos/:id', (req, res) => {
 // -----------------------------------------------
 // create a new user
 app.post('/users', (req, res) => {
-    console.log('User:', req.body);
+    console.log('\tUser:', req.body);
+    console.log('\n');
+
     var body = _.pick(req.body, ['email', 'password']);
     // var user = new User({
     //     email: body.email, 
@@ -133,15 +135,15 @@ app.post('/users', (req, res) => {
     var user = new User(body);
     
     user.save().then(() => {
-        console.log(`POST response: ${res}`);
-        console.log(`POST Save doc: ${user}`);
+        console.log(`\tPOST user response: ${res}`);
+        console.log(`\tPOST user Save doc: ${user}`);
         console.log('\n');
         //res.send(user);
         return user.generateAuthToken();
     }).then((token) => {
         res.header('x-auth', token).send(user);
     }).catch((err) => {
-        console.log(`Error: ${err}`);
+        console.log(`\tError: ${err}`);
         res.status(400).send(err);
     });
 });
