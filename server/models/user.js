@@ -33,6 +33,9 @@ var UserSchema = new mongoose.Schema({
     }]
 });
 
+
+// instance method
+
 UserSchema.methods.toJSON = function() {
     var user = this;
     var userObject = user.toObject();
@@ -49,6 +52,17 @@ UserSchema.methods.generateAuthToken = function() {
 
     return user.save().then(() => {
         return token;
+    });
+};
+
+UserSchema.methods.removeToken = function(token) {
+    // use mongodb $pull to remove item from array, in this case, the token in tokens array
+    var user = this;
+
+    return user.update({
+        $pull: {
+            tokens: {token}
+        }
     });
 };
 
